@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: hello_lukman
+      POSTGRES_USER: hello
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hello_secret}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U hello"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  nginx:
+    image: nginx-gua:v2
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+
+  hello:
+    build:
+      context: ./hello
+      dockerfile: Dockerfile
+
+volumes:
+  postgres_data:
