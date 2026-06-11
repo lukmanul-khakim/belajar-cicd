@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_DB: hello_lukman
       POSTGRES_USER: hello
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-hello_secret}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
